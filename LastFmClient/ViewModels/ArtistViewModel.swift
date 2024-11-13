@@ -23,6 +23,10 @@ struct ArtistViewModel {
     var playcount: Int {
         return Int(artist.playcount) ?? 0
     }
+    
+    var rank: Int {
+        return Int(artist.rank.rank) ?? 0
+    }
 
     var formattedPlaycount: String {
         let numberFormatter = NumberFormatter()

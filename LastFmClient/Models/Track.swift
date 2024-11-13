@@ -9,6 +9,12 @@ struct Track: PlayableItem {
     var name: String
     var playcount: String
     var image: [Image]
+    var rank: Rank
+    
+    enum CodingKeys: String, CodingKey {
+        case name, playcount, image
+        case rank = "@attr"
+    }
 }
 
 struct TopTracksResponse: Decodable {
