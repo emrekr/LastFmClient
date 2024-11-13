@@ -8,6 +8,7 @@
 struct Track: PlayableItem {
     var name: String
     var playcount: String
+    var image: [Image]
 }
 
 struct TopTracksResponse: Decodable {

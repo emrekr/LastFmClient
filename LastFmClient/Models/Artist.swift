@@ -8,6 +8,7 @@
 struct Artist: PlayableItem {
     let name: String
     let playcount: String
+    var image: [Image]
 }
 
 struct TopArtistsResponse: Decodable {
