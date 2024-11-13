@@ -26,7 +26,7 @@ class NetworkService: NetworkServiceProtocol {
             throw NetworkError.invalidURL
         }
 
-        let (data, response) = try await URLSession.shared.data(for: URLRequest(url: url))
+        let (data, _) = try await URLSession.shared.data(for: URLRequest(url: url))
         
         do {
             if let errorResponse = try? JSONDecoder().decode(APIErrorResponse.self, from: data) {
