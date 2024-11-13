@@ -4,6 +4,7 @@
 //
 //  Created by Emre Kuru on 13.11.2024.
 //
+import UIKit
 
 class DependencyInjector {
     // Singleton instance
@@ -46,5 +47,10 @@ class DependencyInjector {
         default:
             fatalError("No ViewModel found for \(T.self)")
         }
+    }
+    
+    //MARK: - Coordinators
+    func provideTopArtistsCoordinator(navigationController: UINavigationController) -> TopArtistsCoordinator {
+        return TopArtistsCoordinator(navigationController: navigationController)
     }
 }

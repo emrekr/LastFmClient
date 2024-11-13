@@ -9,6 +9,7 @@ protocol PlayableItem: Decodable {
     var name: String { get }
     var playcount: String { get }
     var image: [Image] { get }
+    var rank: Rank { get }
 }
 
 struct Image: Decodable {
@@ -19,4 +20,8 @@ struct Image: Decodable {
         case size
         case url = "#text" // Maps "#text" key to url property
     }
+}
+
+struct Rank: Decodable {
+    let rank: String
 }
