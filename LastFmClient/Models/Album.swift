@@ -8,6 +8,7 @@
 struct Album: PlayableItem {
     var name: String
     var playcount: String
+    var image: [Image]
 }
 
 struct TopAlbumsResponse: Decodable {

@@ -10,7 +10,8 @@ class DependencyInjector {
     static let shared = DependencyInjector()
     
     private init() {}
- 
+    
+    //MARK: - Services
     // Lazy-initialized properties for services with protocols as types
     private lazy var topArtistsService: TopArtistsServiceProtocol = {
         TopArtistsService()
@@ -26,15 +27,24 @@ class DependencyInjector {
     
     // Generic Service Provision Method
     func provideService<T>() -> T {
-        switch T.self {
-        case is TopArtistsServiceProtocol.Type:
+        if T.self == TopArtistsServiceProtocol.self {
             return topArtistsService as! T
-        case is TopAlbumsServiceProtocol.Type:
+        } else if T.self == TopAlbumsServiceProtocol.self {
             return topAlbumsService as! T
-        case is TopTracksServiceProtocol.Type:
+        } else if T.self == TopTracksServiceProtocol.self {
             return topTracksService as! T
-        default:
+        } else {
             fatalError("No service found for \(T.self)")
+        }
+    }
+    
+    //MARK: - View Models
+    func provideViewModel<T>() -> T {
+        switch T.self {
+        case is TopArtistsViewModel.Type:
+            return TopArtistsViewModel(topArtistsService: provideService()) as! T
+        default:
+            fatalError("No ViewModel found for \(T.self)")
         }
     }
 }
