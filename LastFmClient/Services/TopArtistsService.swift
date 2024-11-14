@@ -6,7 +6,7 @@
 //
 
 protocol TopArtistsServiceProtocol {
-    func fetchTopArtists(userId: String) async throws -> [Artist]
+    func fetchTopArtists(userId: String, page: Int) async throws -> [Artist]
 }
 
 class TopArtistsService: TopArtistsServiceProtocol {
@@ -16,8 +16,8 @@ class TopArtistsService: TopArtistsServiceProtocol {
         self.topItemsService = networkService
     }
     
-    func fetchTopArtists(userId: String) async throws -> [Artist] {
-        let response: TopArtistsResponse = try await topItemsService.fetch(endpoint: .topArtists(username: userId))
+    func fetchTopArtists(userId: String, page: Int) async throws -> [Artist] {
+        let response: TopArtistsResponse = try await topItemsService.fetch(endpoint: .topArtists(username: userId, page: page))
         return response.topArtists.artists
     }
 }

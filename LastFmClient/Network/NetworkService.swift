@@ -28,11 +28,11 @@ class NetworkService: NetworkServiceProtocol {
 
         let (data, _) = try await URLSession.shared.data(for: URLRequest(url: url))
         
+        if let errorResponse = try? JSONDecoder().decode(APIErrorResponse.self, from: data) {
+            throw APIError(errorCode: errorResponse.error)
+        }
+        
         do {
-            if let errorResponse = try? JSONDecoder().decode(APIErrorResponse.self, from: data) {
-                throw APIError(errorCode: errorResponse.error)
-            }
-            
             let decodedData = try JSONDecoder().decode(T.self, from: data)
             return decodedData
         } catch let decodingError {
