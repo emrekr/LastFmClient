@@ -46,6 +46,8 @@ class DependencyInjector {
             return TopArtistsViewModel(topArtistsService: provideService()) as! T
         case is TopAlbumsViewModel.Type:
             return TopAlbumsViewModel(topAlbumsService: provideService()) as! T
+        case is TopTracksViewModel.Type:
+            return TopTracksViewModel(topTracksService: provideService()) as! T
         default:
             fatalError("No ViewModel found for \(T.self)")
         }
@@ -58,5 +60,9 @@ class DependencyInjector {
     
     func provideTopAlbumsCoordinator(navigationController: UINavigationController) -> TopAlbumsCoordinator {
         return TopAlbumsCoordinator(navigationController: navigationController)
+    }
+    
+    func provideTopTracksCoordinator(navigationController: UINavigationController) -> TopTracksCoordinator {
+        return TopTracksCoordinator(navigationController: navigationController)
     }
 }
