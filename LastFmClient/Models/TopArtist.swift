@@ -5,7 +5,7 @@
 //  Created by Emre Kuru on 13.11.2024.
 //
 
-struct Artist: PlayableItem {
+struct TopArtist: LastFmItem {
     let name: String
     let playcount: String
     var image: [Image]
@@ -19,7 +19,7 @@ struct Artist: PlayableItem {
 
 struct TopArtistsResponse: Decodable {
     struct TopArtists: Decodable {
-        let artists: [Artist]
+        let artists: [TopArtist]
         
         enum CodingKeys: String, CodingKey {
             case artists = "artist"

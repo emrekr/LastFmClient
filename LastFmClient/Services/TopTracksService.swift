@@ -6,7 +6,7 @@
 //
 
 protocol TopTracksServiceProtocol {
-    func fetchTopTracks(userId: String, page: Int) async throws -> [Track]
+    func fetchTopTracks(userId: String, page: Int) async throws -> [TopTrack]
 }
 
 class TopTracksService: TopTracksServiceProtocol {
@@ -16,7 +16,7 @@ class TopTracksService: TopTracksServiceProtocol {
         self.topItemsService = networkService
     }
     
-    func fetchTopTracks(userId: String, page: Int) async throws -> [Track] {
+    func fetchTopTracks(userId: String, page: Int) async throws -> [TopTrack] {
         let response: TopTracksResponse = try await topItemsService.fetch(endpoint: .topTracks(username: userId, page: page))
         return response.topTracks.tracks
     }

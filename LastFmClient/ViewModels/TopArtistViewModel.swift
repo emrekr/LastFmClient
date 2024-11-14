@@ -7,11 +7,11 @@
 
 import Foundation
 
-struct ArtistViewModel {
-    private let artist: Artist
+struct TopArtistViewModel {
+    private let artist: TopArtist
     private let preferredImageSize: String
 
-    init(artist: Artist, preferredImageSize: String = "large") {
+    init(artist: TopArtist, preferredImageSize: String = "large") {
         self.artist = artist
         self.preferredImageSize = preferredImageSize
     }

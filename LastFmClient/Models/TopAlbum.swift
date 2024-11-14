@@ -1,33 +1,36 @@
 //
-//  Track.swift
+//  Album.swift
 //  LastFmClient
 //
 //  Created by Emre Kuru on 13.11.2024.
 //
 
-struct Track: PlayableItem {
+struct TopAlbum: Playable {
     var name: String
     var playcount: String
     var image: [Image]
     var rank: Rank
+    var artist: Artist
     
     enum CodingKeys: String, CodingKey {
-        case name, playcount, image
+        case name, playcount, image, artist
         case rank = "@attr"
     }
 }
 
-struct TopTracksResponse: Decodable {
-    struct TopTracks: Decodable {
-        var tracks: [Track]
+struct TopAlbumsResponse: Decodable {
+    
+    struct TopAlbums: Decodable {
+        let albums: [TopAlbum]
         
         enum CodingKeys: String, CodingKey {
-            case tracks = "track"
+            case albums = "album"
         }
     }
-    let topTracks: TopTracks
+    
+    let topAlbums: TopAlbums
     
     enum CodingKeys: String, CodingKey {
-        case topTracks = "toptracks"
+        case topAlbums = "topalbums"
     }
 }
