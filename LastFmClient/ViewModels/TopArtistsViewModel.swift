@@ -9,7 +9,7 @@ import Foundation
 
 protocol TopArtistsViewModelProtocol {
     func fetchTopArtists(userId: String) async
-    func artistAtIndexPath(indexPath: IndexPath) -> ArtistViewModel
+    func artistAtIndexPath(indexPath: IndexPath) -> TopArtistViewModel
     
     var onFetchTopArtists: (() -> Void)? { get set }
     var onError: ((LastFmError) -> Void)? { get set }
@@ -25,7 +25,7 @@ class TopArtistsViewModel: TopArtistsViewModelProtocol {
     var onLoadingStateChange: ((Bool) -> Void)?
     
     private let topArtistsService: TopArtistsServiceProtocol
-    private var artistViewModels = [ArtistViewModel]()
+    private var artistViewModels = [TopArtistViewModel]()
     
     private var currentPage = 1
     private var isFetching = false
@@ -64,7 +64,7 @@ class TopArtistsViewModel: TopArtistsViewModelProtocol {
         }
         do {
             let artists = try await topArtistsService.fetchTopArtists(userId: userId, page: page)
-            let artisViewModels = artists.map( { ArtistViewModel(artist: $0) } )
+            let artisViewModels = artists.map( { TopArtistViewModel(artist: $0) } )
             if page == 1 {
                 self.artistViewModels = artisViewModels
             } else {
@@ -86,7 +86,7 @@ class TopArtistsViewModel: TopArtistsViewModelProtocol {
         self.onError?(apiError)
     }
     
-    func artistAtIndexPath(indexPath: IndexPath) -> ArtistViewModel {
+    func artistAtIndexPath(indexPath: IndexPath) -> TopArtistViewModel {
         return artistViewModels[indexPath.row]
     }
     

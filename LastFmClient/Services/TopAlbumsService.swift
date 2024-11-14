@@ -6,7 +6,7 @@
 //
 
 protocol TopAlbumsServiceProtocol {
-    func fetchTopAlbums(userId: String, page: Int) async throws -> [Album]
+    func fetchTopAlbums(userId: String, page: Int) async throws -> [TopAlbum]
 }
 
 class TopAlbumsService: TopAlbumsServiceProtocol {
@@ -16,7 +16,7 @@ class TopAlbumsService: TopAlbumsServiceProtocol {
         self.topItemsService = networkService
     }
     
-    func fetchTopAlbums(userId: String, page: Int) async throws -> [Album] {
+    func fetchTopAlbums(userId: String, page: Int) async throws -> [TopAlbum] {
         let response: TopAlbumsResponse = try await topItemsService.fetch(endpoint: .topAlbums(username: userId, page: page))
         return response.topAlbums.albums
     }
