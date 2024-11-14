@@ -8,18 +8,18 @@
 import Foundation
 
 enum Endpoint {
-    case topArtists(username: String)
-    case topTracks(username: String)
-    case topAlbums(username: String)
+    case topArtists(username: String, page: Int)
+    case topTracks(username: String, page: Int)
+    case topAlbums(username: String, page: Int)
     
     var queryItems: [URLQueryItem] {
         switch self {
-        case .topArtists(let username):
-            return [.init(name: "method", value: "user.gettopartists"), .init(name: "user", value: username)]
-        case .topTracks(let username):
-            return [.init(name: "method", value: "user.gettoptracks"), .init(name: "user", value: username)]
-        case .topAlbums(let username):
-            return [.init(name: "method", value: "user.gettopalbums"), .init(name: "user", value: username)]
+        case .topArtists(let username, let page):
+            return [.init(name: "method", value: "user.gettopartists"), .init(name: "user", value: username), .init(name: "page", value: "\(page)")]
+        case .topTracks(let username, let page):
+            return [.init(name: "method", value: "user.gettoptracks"), .init(name: "user", value: username), .init(name: "page", value: "\(page)")]
+        case .topAlbums(let username, let page):
+            return [.init(name: "method", value: "user.gettopalbums"), .init(name: "user", value: username), .init(name: "page", value: "\(page)")]
         }
     }
 }

@@ -12,7 +12,7 @@ struct APIErrorResponse: Decodable {
     let error: Int
 }
 
-enum APIError: Error, LocalizedError {
+enum APIError: LastFmError, LocalizedError {
     case invalidService
     case invalidMethod
     case authenticationFailed
@@ -49,7 +49,7 @@ enum APIError: Error, LocalizedError {
         }
     }
 
-    var errorDescription: String? {
+    var message: String {
         switch self {
         case .invalidService:
             return "Invalid service - This service does not exist."
