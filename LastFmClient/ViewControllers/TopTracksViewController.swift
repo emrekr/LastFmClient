@@ -42,6 +42,8 @@ class TopTracksViewController: UIViewController {
         loadingIndicator.hidesWhenStopped = true
         tableView.tableFooterView = loadingIndicator
 
+        tableView.contentInsetAdjustmentBehavior = .never
+        
         view.addSubview(tableView)
         tableView.fill(.all)
     }

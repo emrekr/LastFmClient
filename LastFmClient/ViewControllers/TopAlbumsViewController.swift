@@ -43,6 +43,8 @@ class TopAlbumsViewController: UIViewController {
         
         loadingIndicator.hidesWhenStopped = true
         tableView.tableFooterView = loadingIndicator
+
+        tableView.contentInsetAdjustmentBehavior = .never
         
         tableView.rowHeight = 84
 
