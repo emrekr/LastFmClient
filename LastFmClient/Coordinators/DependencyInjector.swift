@@ -65,4 +65,8 @@ class DependencyInjector {
     func provideTopTracksCoordinator(navigationController: UINavigationController) -> TopTracksCoordinator {
         return TopTracksCoordinator(navigationController: navigationController)
     }
+    
+    func provideTopItemsCoordinator(navigationController: UINavigationController) -> TopItemsCoordinator {
+        return TopItemsCoordinator(navigationController: navigationController)
+    }
 }
