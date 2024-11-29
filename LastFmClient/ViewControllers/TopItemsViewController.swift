@@ -15,7 +15,7 @@ class TopItemsViewController: UIViewController {
     weak var delegate: TopItemsViewControllerDelegate?
     
     private let segmentedControl: UISegmentedControl = {
-        let control = UISegmentedControl(items: ["Top Albums", "Top Artists", "Top Tracks"])
+        let control = UISegmentedControl(items: ["Top Artists", "Top Albums", "Top Tracks"])
         control.selectedSegmentIndex = 0
         control.backgroundColor = .white
         control.translatesAutoresizingMaskIntoConstraints = false

@@ -28,6 +28,7 @@ class TopTracksViewModel: TopTracksViewModelProtocol {
     var onLoadingStateChange: ((Bool) -> Void)?
     
     private let topTracksService: TopTracksServiceProtocol
+    private let artistService: ArtistServiceProtocol
     private var topTrackViewModels = [TopTrackViewModel]()
     
     private var currentPage = 1
@@ -39,8 +40,9 @@ class TopTracksViewModel: TopTracksViewModelProtocol {
         }
     }
     
-    init (topTracksService: TopTracksServiceProtocol) {
+    init (topTracksService: TopTracksServiceProtocol, artistService: ArtistServiceProtocol) {
         self.topTracksService = topTracksService
+        self.artistService = artistService
     }
     
     var numberOfRowsInSection: Int {
@@ -67,7 +69,14 @@ class TopTracksViewModel: TopTracksViewModelProtocol {
         }
         do {
             let tracks: [TopTrack] = try await topTracksService.fetchTopTracks(userId: userId, page: page)
-            let tracksViewModels = tracks.map( { TopTrackViewModel(track: $0) } )
+            let tracksViewModels = tracks.map { track in
+                let viewModel = TopTrackViewModel(track: track, artistService: artistService)
+                Task {
+                    await viewModel.fetchArtistInfo(userId: userId)
+                }
+                return viewModel
+            }
+
             if page == 1 {
                 self.topTrackViewModels = tracksViewModels
             } else {

@@ -53,7 +53,7 @@ class DependencyInjector {
         case is TopAlbumsViewModel.Type:
             return TopAlbumsViewModel(topAlbumsService: provideService()) as! T
         case is TopTracksViewModel.Type:
-            return TopTracksViewModel(topTracksService: provideService()) as! T
+            return TopTracksViewModel(topTracksService: provideService(), artistService: provideService()) as! T
         default:
             fatalError("No ViewModel found for \(T.self)")
         }

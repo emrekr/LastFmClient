@@ -18,7 +18,6 @@ class TopArtistViewModel {
     }
     
     var onImageUpdate: (() -> Void)?
-    private let imageLoader = ImageLoader()
     
     private let artistService: ArtistServiceProtocol
     private var isFetchingImage = false

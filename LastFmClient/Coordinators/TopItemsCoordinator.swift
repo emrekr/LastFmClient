@@ -44,9 +44,9 @@ extension TopItemsCoordinator: TopItemsViewControllerDelegate {
     func didSelectSegment(index: Int, in viewController: TopItemsViewController) {
         switch index {
         case 0:
-            viewController.displayChildNavigationController(topAlbumsCoordinator.navigationController)
-        case 1:
             viewController.displayChildNavigationController(topArtistsCoordinator.navigationController)
+        case 1:
+            viewController.displayChildNavigationController(topAlbumsCoordinator.navigationController)
         case 2:
             viewController.displayChildNavigationController(topTracksCoordinator.navigationController)
         default:
