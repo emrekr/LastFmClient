@@ -75,7 +75,7 @@ class TopTracksTableViewCell: UITableViewCell {
     
     // MARK: - Configure Cell
     func configure(with viewModel: TopTrackViewModel) {
-        rankLabel.text = "\(viewModel.rank)."
+        rankLabel.text = viewModel.formattedRank
         titleLabel.text = viewModel.name
         playcountLabel.text = viewModel.formattedPlaycount
         artistLabel.text = viewModel.artistName

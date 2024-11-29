@@ -8,7 +8,7 @@
 import Foundation
 
 protocol NetworkServiceProtocol {
-    func request<T: Decodable>(_ endpoint: Endpoint) async throws -> T
+    func request<T: Decodable>(_ endpoint: EndpointProtocol) async throws -> T
 }
 
 class NetworkService: NetworkServiceProtocol {
@@ -17,7 +17,7 @@ class NetworkService: NetworkServiceProtocol {
 
     private init() {}
     
-    func request<T>(_ endpoint: Endpoint) async throws -> T where T : Decodable {
+    func request<T>(_ endpoint: EndpointProtocol) async throws -> T where T : Decodable {
         var urlComponents = URLComponents(string: APIConfiguration.baseURL)!
         urlComponents.queryItems = [APIConfiguration.apiKeyQueryParameter, APIConfiguration.formatQueryParameter]
         urlComponents.queryItems?.append(contentsOf: endpoint.queryItems)

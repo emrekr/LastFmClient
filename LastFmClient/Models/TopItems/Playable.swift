@@ -6,9 +6,9 @@
 //
 
 protocol Playable: LastFmItem {
-    var artist: Artist { get }
+    var artist: PlayableArtist { get }
 }
 
-struct Artist: Decodable {
+struct PlayableArtist: Decodable {
     let name: String
 }

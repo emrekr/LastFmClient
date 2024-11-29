@@ -13,6 +13,8 @@ class TopArtistsViewController: UIViewController {
     private let viewModel: TopArtistsViewModel
     private let loadingIndicator = UIActivityIndicatorView(style: .medium)
     
+    private let imageLoader = ImageLoader()
+    
     init(viewModel: TopArtistsViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -43,6 +45,8 @@ class TopArtistsViewController: UIViewController {
         tableView.tableFooterView = loadingIndicator
         
         tableView.contentInsetAdjustmentBehavior = .never
+        
+        tableView.rowHeight = 84
 
         view.addSubview(tableView)
         tableView.fill(.all)
@@ -83,6 +87,7 @@ extension TopArtistsViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TopArtistsCell", for: indexPath) as! TopArtistTableViewCell
         let artistViewModel = viewModel.artistAtIndexPath(indexPath: indexPath)
+        cell.imageLoader = imageLoader
         cell.configure(with: artistViewModel)
         return cell
     }
@@ -92,7 +97,7 @@ extension TopArtistsViewController: UITableViewDelegate, UITableViewDataSource {
         let position = scrollView.contentOffset.y
         let contentHeight = scrollView.contentSize.height
         let frameHeight = scrollView.frame.size.height
-        let threshold = contentHeight - frameHeight * 1.5 // Adjust threshold as needed
+        let threshold = contentHeight - frameHeight * 1.5
 
         if position > threshold {
             Task {
