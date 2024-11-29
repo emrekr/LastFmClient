@@ -6,7 +6,7 @@
 //
 
 protocol TopItemsServiceProtocol {
-    func fetch<T: Decodable>(endpoint: Endpoint) async throws -> T
+    func fetch<T: Decodable>(endpoint: UserEndpoint) async throws -> T
 }
 
 class TopItemsService: TopItemsServiceProtocol {
@@ -16,7 +16,7 @@ class TopItemsService: TopItemsServiceProtocol {
         self.networkService = networkService
     }
 
-    func fetch<T: Decodable>(endpoint: Endpoint) async throws -> T {
+    func fetch<T: Decodable>(endpoint: UserEndpoint) async throws -> T {
         return try await networkService.request(endpoint)
     }
 }

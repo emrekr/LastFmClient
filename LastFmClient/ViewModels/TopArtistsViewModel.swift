@@ -25,6 +25,7 @@ class TopArtistsViewModel: TopArtistsViewModelProtocol {
     var onLoadingStateChange: ((Bool) -> Void)?
     
     private let topArtistsService: TopArtistsServiceProtocol
+    private let artistService: ArtistServiceProtocol
     private var artistViewModels = [TopArtistViewModel]()
     
     private var currentPage = 1
@@ -36,8 +37,9 @@ class TopArtistsViewModel: TopArtistsViewModelProtocol {
         }
     }
     
-    init (topArtistsService: TopArtistsServiceProtocol) {
+    init(topArtistsService: TopArtistsServiceProtocol, artistService: ArtistServiceProtocol) {
         self.topArtistsService = topArtistsService
+        self.artistService = artistService
     }
     
     var numberOfRowsInSection: Int {
@@ -59,16 +61,21 @@ class TopArtistsViewModel: TopArtistsViewModelProtocol {
     private func fetchArtists(userId: String, page: Int) async {
         guard !isFetching else { return }
         isFetching = true
-        defer {
-            isFetching = false
-        }
+        defer { isFetching = false }
+
         do {
             let artists = try await topArtistsService.fetchTopArtists(userId: userId, page: page)
-            let artisViewModels = artists.map( { TopArtistViewModel(artist: $0) } )
+            let artistViewModels = artists.map { artist in
+                let viewModel = TopArtistViewModel(artist: artist, artistService: artistService)
+                Task {
+                    await viewModel.fetchArtistInfo(userId: userId)
+                }
+                return viewModel
+            }
             if page == 1 {
-                self.artistViewModels = artisViewModels
+                self.artistViewModels = artistViewModels
             } else {
-                self.artistViewModels.append(contentsOf: artisViewModels)
+                self.artistViewModels.append(contentsOf: artistViewModels)
             }
             currentPage = page
             await MainActor.run {
@@ -80,6 +87,7 @@ class TopArtistsViewModel: TopArtistsViewModelProtocol {
             }
         }
     }
+
     
     private func handle(error: Error) {
         let apiError = (error as? LastFmError) ?? APIError.unknownError

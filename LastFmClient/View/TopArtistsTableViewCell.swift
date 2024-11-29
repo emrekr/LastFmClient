@@ -35,6 +35,17 @@ class TopArtistTableViewCell: UITableViewCell {
         return label
     }()
     
+    private let artistImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFill
+        imageView.layer.cornerRadius = 8
+        imageView.clipsToBounds = true
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        return imageView
+    }()
+    
+    var imageLoader: ImageLoaderProtocol?
+    
     // MARK: - Initialization
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -49,15 +60,48 @@ class TopArtistTableViewCell: UITableViewCell {
         contentView.addSubview(rankLabel)
         contentView.addSubview(nameLabel)
         contentView.addSubview(playcountLabel)
+        contentView.addSubview(artistImageView)
         
-        contentView.addConstraints("H:|-10-[v0]-20-[v1]-(>=10)-[v2]-10-|", views: rankLabel, nameLabel, playcountLabel)
+        contentView.addConstraints("H:|-10-[v0]-20-[v1(64)]-10-[v2]-(>=10)-[v3]-10-|", views: rankLabel, artistImageView, nameLabel, playcountLabel)
+        contentView.addConstraints("V:[v0(64)]", views: artistImageView)
         contentView.addConstraintsToSubviews("V:|-10-[v0]-10-|")
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        artistImageView.image = nil
     }
     
     // MARK: - Configure Cell
     func configure(with viewModel: TopArtistViewModel) {
-        rankLabel.text = "\(viewModel.rank)."
+        rankLabel.text = viewModel.formattedRank
         nameLabel.text = viewModel.name
         playcountLabel.text = viewModel.formattedPlaycount
+
+        if let artistInfo = viewModel.artistInfo {
+            if let imageUrl = artistInfo.image.first(where: {$0.size == "medium"})?.url {
+                loadArtistImage(imageUrl: imageUrl)
+            }
+        } else if let imageURL = viewModel.imageURL {
+            imageLoader?.loadImage(from: imageURL, completion: { [weak self] image in
+                DispatchQueue.main.async {
+                    self?.artistImageView.image = image
+                }
+            })
+        }
+
+        viewModel.onImageUpdate = { [weak self] in
+            if let imageUrl = viewModel.artistInfo?.image.first(where: {$0.size == "medium"})?.url {
+                self?.loadArtistImage(imageUrl: imageUrl)
+            }
+        }
+    }
+    
+    private func loadArtistImage(imageUrl: String) {
+        self.imageLoader?.loadImage(from: URL(string: imageUrl)!) { [weak self] image in
+            DispatchQueue.main.async {
+                self?.artistImageView.image = image
+            }
+        }
     }
 }

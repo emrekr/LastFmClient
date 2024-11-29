@@ -94,7 +94,7 @@ class TopAlbumsTableViewCell: UITableViewCell {
     
     // MARK: - Configure Cell
     func configure(with viewModel: TopAlbumViewModel) {
-        rankLabel.text = "\(viewModel.rank)."
+        rankLabel.text = viewModel.formattedRank
         titleLabel.text = viewModel.name
         playcountLabel.text = viewModel.formattedPlaycount
         artistLabel.text = viewModel.artistName

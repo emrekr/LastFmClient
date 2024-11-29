@@ -28,8 +28,12 @@ struct TopAlbumViewModel {
         return Int(album.playcount) ?? 0
     }
     
-    var rank: Int {
+    private var rank: Int {
         return Int(album.rank.rank) ?? 0
+    }
+    
+    var formattedRank: String {
+        return "\(rank)."
     }
 
     var formattedPlaycount: String {

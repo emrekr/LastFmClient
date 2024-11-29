@@ -28,8 +28,12 @@ struct TopTrackViewModel {
         return Int(track.playcount) ?? 0
     }
     
-    var rank: Int {
+    private var rank: Int {
         return Int(track.rank.rank) ?? 0
+    }
+    
+    var formattedRank: String {
+        return "\(rank)."
     }
 
     var formattedPlaycount: String {

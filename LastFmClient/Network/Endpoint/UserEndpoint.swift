@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum Endpoint {
+enum UserEndpoint {
     case topArtists(username: String, page: Int)
     case topTracks(username: String, page: Int)
     case topAlbums(username: String, page: Int)
