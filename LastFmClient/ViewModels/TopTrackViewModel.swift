@@ -7,13 +7,24 @@
 
 import Foundation
 
-struct TopTrackViewModel {
+class TopTrackViewModel {
     private let track: TopTrack
     private let preferredImageSize: String
+    private let artistService: ArtistServiceProtocol
+    private var isFetchingImage = false
+    
+    var onImageUpdate: (() -> Void)?
+    
+    var artistInfo: Artist? {
+        didSet {
+            onImageUpdate?()
+        }
+    }
 
-    init(track: TopTrack, preferredImageSize: String = "medium") {
+    init(track: TopTrack, artistService: ArtistServiceProtocol,preferredImageSize: String = "medium") {
         self.track = track
         self.preferredImageSize = preferredImageSize
+        self.artistService = artistService
     }
 
     var name: String {
@@ -47,5 +58,18 @@ struct TopTrackViewModel {
             return nil
         }
         return URL(string: image.url)
+    }
+    
+    func fetchArtistInfo(userId: String) async {
+        guard artistInfo == nil, !isFetchingImage else { return }
+        isFetchingImage = true
+        defer { isFetchingImage = false }
+        
+        do {
+            let artistInfo = try await artistService.getInfo(artistName: artistName, userId: userId)
+            self.artistInfo = artistInfo
+        } catch {
+            print("Failed to fetch image for \(name): \(error)")
+        }
     }
 }

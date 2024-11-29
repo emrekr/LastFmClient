@@ -13,6 +13,8 @@ class TopTracksViewController: UIViewController {
     private let viewModel: TopTracksViewModel
     private let loadingIndicator = UIActivityIndicatorView(style: .medium)
     
+    private let imageLoader = ImageLoader()
+    
     init(viewModel: TopTracksViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -43,6 +45,8 @@ class TopTracksViewController: UIViewController {
         tableView.tableFooterView = loadingIndicator
 
         tableView.contentInsetAdjustmentBehavior = .never
+        
+        tableView.rowHeight = 84
         
         view.addSubview(tableView)
         tableView.fill(.all)
@@ -83,6 +87,7 @@ extension TopTracksViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TopTracksCell", for: indexPath) as! TopTracksTableViewCell
         let trackViewModel = viewModel.trackAtIndexPath(indexPath: indexPath)
+        cell.imageLoader = imageLoader
         cell.configure(with: trackViewModel)
         return cell
     }
