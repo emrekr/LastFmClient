@@ -17,6 +17,9 @@ class TopArtistsService: TopArtistsServiceProtocol {
     }
     
     func fetchTopArtists(userId: String, page: Int) async throws -> [TopArtist] {
+        guard page > 0 else {
+            throw NetworkError.invalidParameter("Page number must be greater than 0")
+        }
         let response: TopArtistsResponse = try await topItemsService.fetch(endpoint: .topArtists(username: userId, page: page))
         return response.topArtists.artists
     }
