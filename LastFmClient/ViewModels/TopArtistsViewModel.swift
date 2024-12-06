@@ -29,11 +29,9 @@ class TopArtistsViewModel: TopArtistsViewModelProtocol {
     private var artistViewModels = [TopArtistViewModel]()
     
     private var currentPage = 1
-    private var isFetching = false
-    
-    private var isLoading: Bool = false {
+    private var isFetching = false {
         didSet {
-            onLoadingStateChange?(isLoading)
+            onLoadingStateChange?(isFetching)
         }
     }
     
@@ -52,10 +50,7 @@ class TopArtistsViewModel: TopArtistsViewModelProtocol {
     }
 
     func fetchMoreArtists(userId: String) async {
-        guard !isFetching else { return }
-        isLoading = true
         await fetchArtists(userId: userId, page: currentPage + 1)
-        isLoading = false
     }
     
     private func fetchArtists(userId: String, page: Int) async {
@@ -90,7 +85,7 @@ class TopArtistsViewModel: TopArtistsViewModelProtocol {
 
     
     private func handle(error: Error) {
-        let apiError = (error as? LastFmError) ?? APIError.unknownError
+        let apiError = (error as? LastFmError) ?? LastFmError.other(error.localizedDescription)
         self.onError?(apiError)
     }
     
