@@ -18,7 +18,7 @@ class TopAlbumsService: TopAlbumsServiceProtocol {
     
     func fetchTopAlbums(userId: String, page: Int) async throws -> [TopAlbum] {
         guard page > 0 else {
-            throw NetworkError.invalidParameter("Page number must be greater than 0")
+            throw LastFmError.network(.invalidParameter("Page number must be greater than 0"))
         }
         let response: TopAlbumsResponse = try await topItemsService.fetch(endpoint: .topAlbums(username: userId, page: page))
         return response.topAlbums.albums

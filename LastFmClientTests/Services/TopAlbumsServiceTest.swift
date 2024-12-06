@@ -62,8 +62,8 @@ final class TopAlbumsServiceTests: XCTestCase {
         do {
             _ = try await topAlbumsService.fetchTopAlbums(userId: "testUser", page: -1)
             XCTFail("Expected an error for invalid page parameter but succeeded.")
-        } catch let error as NetworkError {
-            XCTAssertEqual(error, NetworkError.invalidParameter("Page number must be greater than 0"))
+        } catch let error as LastFmError {
+            XCTAssertEqual(error, LastFmError.network(.invalidParameter("Page number must be greater than 0")))
         } catch {
             XCTFail("Expected NetworkError.invalidParameter but got \(error).")
         }

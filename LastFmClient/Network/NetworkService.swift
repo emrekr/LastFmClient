@@ -23,7 +23,7 @@ class NetworkService: NetworkServiceProtocol {
         urlComponents.queryItems?.append(contentsOf: endpoint.queryItems)
         
         guard let url = urlComponents.url else {
-            throw NetworkError.invalidURL
+            throw LastFmError.network(.invalidURL)
         }
 
         let (data, _) = try await URLSession.shared.data(for: URLRequest(url: url))
@@ -36,7 +36,7 @@ class NetworkService: NetworkServiceProtocol {
             let decodedData = try JSONDecoder().decode(T.self, from: data)
             return decodedData
         } catch let decodingError {
-            throw NetworkError.decodingError(decodingError)
+            throw LastFmError.network(.decodingError(decodingError))
         }
     }
 }
