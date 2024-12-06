@@ -21,7 +21,7 @@ protocol TopAlbumsViewModelProtocol {
 class TopAlbumsViewModel: TopAlbumsViewModelProtocol {
     
     var onFetchTopAlbums: (() -> Void)?
-    var onError: ((any LastFmError) -> Void)?
+    var onError: ((LastFmError) -> Void)?
     var onLoadingStateChange: ((Bool) -> Void)?
     
     private let topAlbumsService: TopAlbumsServiceProtocol
@@ -82,7 +82,7 @@ class TopAlbumsViewModel: TopAlbumsViewModelProtocol {
     }
     
     private func handle(error: Error) {
-        let apiError = (error as? LastFmError) ?? APIError.unknownError
+        let apiError = (error as? LastFmError) ?? LastFmError.other(error.localizedDescription)
         self.onError?(apiError)
     }
     

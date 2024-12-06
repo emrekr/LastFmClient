@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum NetworkError: LastFmError, Equatable {
+enum NetworkError: Error, Equatable {
     case invalidURL
     case decodingError(Error)
     case invalidParameter(String)

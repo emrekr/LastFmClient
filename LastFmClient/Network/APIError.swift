@@ -12,7 +12,7 @@ struct APIErrorResponse: Decodable {
     let error: Int
 }
 
-enum APIError: LastFmError, LocalizedError {
+enum APIError: LocalizedError {
     case invalidService
     case invalidMethod
     case authenticationFailed
