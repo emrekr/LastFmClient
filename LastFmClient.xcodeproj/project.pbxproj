@@ -7,14 +7,14 @@
 	objects = {
 
 /* Begin PBXContainerItemProxy section */
-		AFEC79B52CE36A1A00A37052 /* PBXContainerItemProxy */ = {
+		AFAA76572D01D11A00724726 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = AFEC79962CE36A1900A37052 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = AFEC799D2CE36A1900A37052;
 			remoteInfo = LastFmClient;
 		};
-		AFEC79BF2CE36A1A00A37052 /* PBXContainerItemProxy */ = {
+		AFEC79B52CE36A1A00A37052 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = AFEC79962CE36A1900A37052 /* Project object */;
 			proxyType = 1;
@@ -24,9 +24,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		AFAA76512D01D11A00724726 /* LastFmClientUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LastFmClientUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		AFEC799E2CE36A1900A37052 /* LastFmClient.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LastFmClient.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AFEC79B42CE36A1A00A37052 /* LastFmClientTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LastFmClientTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		AFEC79BE2CE36A1A00A37052 /* LastFmClientUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LastFmClientUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -40,6 +40,11 @@
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		AFAA76522D01D11A00724726 /* LastFmClientUITests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = LastFmClientUITests;
+			sourceTree = "<group>";
+		};
 		AFEC79A02CE36A1900A37052 /* LastFmClient */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
@@ -53,14 +58,16 @@
 			path = LastFmClientTests;
 			sourceTree = "<group>";
 		};
-		AFEC79C12CE36A1A00A37052 /* LastFmClientUITests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = LastFmClientUITests;
-			sourceTree = "<group>";
-		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		AFAA764E2D01D11A00724726 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		AFEC799B2CE36A1900A37052 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -75,13 +82,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		AFEC79BB2CE36A1A00A37052 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -90,7 +90,7 @@
 			children = (
 				AFEC79A02CE36A1900A37052 /* LastFmClient */,
 				AFEC79B72CE36A1A00A37052 /* LastFmClientTests */,
-				AFEC79C12CE36A1A00A37052 /* LastFmClientUITests */,
+				AFAA76522D01D11A00724726 /* LastFmClientUITests */,
 				AFEC799F2CE36A1900A37052 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -100,7 +100,7 @@
 			children = (
 				AFEC799E2CE36A1900A37052 /* LastFmClient.app */,
 				AFEC79B42CE36A1A00A37052 /* LastFmClientTests.xctest */,
-				AFEC79BE2CE36A1A00A37052 /* LastFmClientUITests.xctest */,
+				AFAA76512D01D11A00724726 /* LastFmClientUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -108,6 +108,29 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		AFAA76502D01D11A00724726 /* LastFmClientUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AFAA76592D01D11A00724726 /* Build configuration list for PBXNativeTarget "LastFmClientUITests" */;
+			buildPhases = (
+				AFAA764D2D01D11A00724726 /* Sources */,
+				AFAA764E2D01D11A00724726 /* Frameworks */,
+				AFAA764F2D01D11A00724726 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				AFAA76582D01D11A00724726 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				AFAA76522D01D11A00724726 /* LastFmClientUITests */,
+			);
+			name = LastFmClientUITests;
+			packageProductDependencies = (
+			);
+			productName = LastFmClientUITests;
+			productReference = AFAA76512D01D11A00724726 /* LastFmClientUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 		AFEC799D2CE36A1900A37052 /* LastFmClient */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = AFEC79C72CE36A1A00A37052 /* Build configuration list for PBXNativeTarget "LastFmClient" */;
@@ -153,29 +176,6 @@
 			productReference = AFEC79B42CE36A1A00A37052 /* LastFmClientTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		AFEC79BD2CE36A1A00A37052 /* LastFmClientUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = AFEC79CF2CE36A1A00A37052 /* Build configuration list for PBXNativeTarget "LastFmClientUITests" */;
-			buildPhases = (
-				AFEC79BA2CE36A1A00A37052 /* Sources */,
-				AFEC79BB2CE36A1A00A37052 /* Frameworks */,
-				AFEC79BC2CE36A1A00A37052 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				AFEC79C02CE36A1A00A37052 /* PBXTargetDependency */,
-			);
-			fileSystemSynchronizedGroups = (
-				AFEC79C12CE36A1A00A37052 /* LastFmClientUITests */,
-			);
-			name = LastFmClientUITests;
-			packageProductDependencies = (
-			);
-			productName = LastFmClientUITests;
-			productReference = AFEC79BE2CE36A1A00A37052 /* LastFmClientUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -186,14 +186,14 @@
 				LastSwiftUpdateCheck = 1610;
 				LastUpgradeCheck = 1610;
 				TargetAttributes = {
+					AFAA76502D01D11A00724726 = {
+						CreatedOnToolsVersion = 16.1;
+						TestTargetID = AFEC799D2CE36A1900A37052;
+					};
 					AFEC799D2CE36A1900A37052 = {
 						CreatedOnToolsVersion = 16.1;
 					};
 					AFEC79B32CE36A1A00A37052 = {
-						CreatedOnToolsVersion = 16.1;
-						TestTargetID = AFEC799D2CE36A1900A37052;
-					};
-					AFEC79BD2CE36A1A00A37052 = {
 						CreatedOnToolsVersion = 16.1;
 						TestTargetID = AFEC799D2CE36A1900A37052;
 					};
@@ -215,12 +215,19 @@
 			targets = (
 				AFEC799D2CE36A1900A37052 /* LastFmClient */,
 				AFEC79B32CE36A1A00A37052 /* LastFmClientTests */,
-				AFEC79BD2CE36A1A00A37052 /* LastFmClientUITests */,
+				AFAA76502D01D11A00724726 /* LastFmClientUITests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		AFAA764F2D01D11A00724726 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		AFEC799C2CE36A1900A37052 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -235,16 +242,16 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		AFEC79BC2CE36A1A00A37052 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		AFAA764D2D01D11A00724726 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-/* End PBXResourcesBuildPhase section */
-
-/* Begin PBXSourcesBuildPhase section */
 		AFEC799A2CE36A1900A37052 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -259,29 +266,56 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		AFEC79BA2CE36A1A00A37052 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		AFAA76582D01D11A00724726 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = AFEC799D2CE36A1900A37052 /* LastFmClient */;
+			targetProxy = AFAA76572D01D11A00724726 /* PBXContainerItemProxy */;
+		};
 		AFEC79B62CE36A1A00A37052 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = AFEC799D2CE36A1900A37052 /* LastFmClient */;
 			targetProxy = AFEC79B52CE36A1A00A37052 /* PBXContainerItemProxy */;
 		};
-		AFEC79C02CE36A1A00A37052 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = AFEC799D2CE36A1900A37052 /* LastFmClient */;
-			targetProxy = AFEC79BF2CE36A1A00A37052 /* PBXContainerItemProxy */;
-		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		AFAA765A2D01D11A00724726 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = D6RA2GSSH3;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.poilabs.LastFmClientUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = LastFmClient;
+			};
+			name = Debug;
+		};
+		AFAA765B2D01D11A00724726 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = D6RA2GSSH3;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.poilabs.LastFmClientUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = LastFmClient;
+			};
+			name = Release;
+		};
 		AFEC79C82CE36A1A00A37052 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -294,10 +328,10 @@
 				INFOPLIST_FILE = LastFmClient/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
+				LASTFM_API_KEY = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -327,10 +361,10 @@
 				INFOPLIST_FILE = LastFmClient/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
+				LASTFM_API_KEY = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -505,43 +539,18 @@
 			};
 			name = Release;
 		};
-		AFEC79D02CE36A1A00A37052 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = D6RA2GSSH3;
-				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.poilabs.LastFmClientUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = LastFmClient;
-			};
-			name = Debug;
-		};
-		AFEC79D12CE36A1A00A37052 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = D6RA2GSSH3;
-				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.poilabs.LastFmClientUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = LastFmClient;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		AFAA76592D01D11A00724726 /* Build configuration list for PBXNativeTarget "LastFmClientUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AFAA765A2D01D11A00724726 /* Debug */,
+				AFAA765B2D01D11A00724726 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		AFEC79992CE36A1900A37052 /* Build configuration list for PBXProject "LastFmClient" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -565,15 +574,6 @@
 			buildConfigurations = (
 				AFEC79CD2CE36A1A00A37052 /* Debug */,
 				AFEC79CE2CE36A1A00A37052 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		AFEC79CF2CE36A1A00A37052 /* Build configuration list for PBXNativeTarget "LastFmClientUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				AFEC79D02CE36A1A00A37052 /* Debug */,
-				AFEC79D12CE36A1A00A37052 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
