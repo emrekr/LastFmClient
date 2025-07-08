@@ -10,9 +10,9 @@ protocol TopTracksServiceProtocol {
 }
 
 class TopTracksService: TopTracksServiceProtocol {
-    private let topItemsService: TopItemsServiceProtocol
+    private let topItemsService: UserServiceProtocol
     
-    init(networkService: TopItemsServiceProtocol = TopItemsService()) {
+    init(networkService: UserServiceProtocol = UserService()) {
         self.topItemsService = networkService
     }
     

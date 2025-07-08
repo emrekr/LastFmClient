@@ -37,9 +37,7 @@ struct TopAlbumViewModel {
     }
 
     var formattedPlaycount: String {
-        let numberFormatter = NumberFormatter()
-        numberFormatter.numberStyle = .decimal
-        return numberFormatter.string(from: NSNumber(value: playcount)) ?? "\(playcount)"
+        return album.playcount.formatted
     }
 
     var imageURL: URL? {

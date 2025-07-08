@@ -34,8 +34,10 @@ class TopItemsCoordinator: Coordinator {
     }
 
     func start() {
-        let viewController = TopItemsViewController()
+        let userInfoViewModel: UserInfoViewModel = DependencyInjector.shared.provideViewModel()
+        let viewController = TopItemsViewController(userInfoViewModel: userInfoViewModel)
         viewController.delegate = self
+
         navigationController.setViewControllers([viewController], animated: false)
     }
 }

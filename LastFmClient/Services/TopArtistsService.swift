@@ -10,17 +10,17 @@ protocol TopArtistsServiceProtocol {
 }
 
 class TopArtistsService: TopArtistsServiceProtocol {
-    private let topItemsService: TopItemsServiceProtocol
+    private let userService: UserServiceProtocol
     
-    init(networkService: TopItemsServiceProtocol = TopItemsService()) {
-        self.topItemsService = networkService
+    init(networkService: UserServiceProtocol = UserService()) {
+        self.userService = networkService
     }
     
     func fetchTopArtists(userId: String, page: Int) async throws -> [TopArtist] {
         guard page > 0 else {
             throw LastFmError.network(.invalidParameter("Page number must be greater than 0"))
         }
-        let response: TopArtistsResponse = try await topItemsService.fetch(endpoint: .topArtists(username: userId, page: page))
+        let response: TopArtistsResponse = try await userService.fetch(endpoint: .topArtists(username: userId, page: page))
         return response.topArtists.artists
     }
 }

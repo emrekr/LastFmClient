@@ -5,11 +5,11 @@
 //  Created by Emre Kuru on 13.11.2024.
 //
 
-protocol TopItemsServiceProtocol {
+protocol UserServiceProtocol {
     func fetch<T: Decodable>(endpoint: UserEndpoint) async throws -> T
 }
 
-class TopItemsService: TopItemsServiceProtocol {
+class UserService: UserServiceProtocol {
     private let networkService: NetworkServiceProtocol
 
     init(networkService: NetworkServiceProtocol = NetworkService.shared) {

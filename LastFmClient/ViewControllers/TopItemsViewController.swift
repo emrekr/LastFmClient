@@ -22,6 +22,19 @@ class TopItemsViewController: UIViewController {
         return control
     }()
     
+    private lazy var userInfoView = UserInfoView(viewModel: userInfoViewModel)
+    
+    private let userInfoViewModel: UserInfoViewModel
+
+    init(userInfoViewModel: UserInfoViewModel) {
+        self.userInfoViewModel = userInfoViewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
@@ -32,10 +45,12 @@ class TopItemsViewController: UIViewController {
     private func setupUI() {
         self.view.backgroundColor = .white
         
+        view.addSubview(userInfoView)
         view.addSubview(segmentedControl)
         
+        view.addConstraints("H:|-16-[v0]-16-|", views: userInfoView)
         view.addConstraints("H:|-16-[v0]-16-|", views: segmentedControl)
-        view.addConstraints("V:|-[v0]", views: segmentedControl)
+        view.addConstraints("V:|-[v0]-8-[v1]", views: userInfoView, segmentedControl)
     }
     
     private func addSegmentedControlTarget() {
