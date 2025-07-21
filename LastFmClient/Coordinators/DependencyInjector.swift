@@ -30,6 +30,10 @@ class DependencyInjector {
         ArtistService()
     }()
     
+    private lazy var userinfoService: UserInfoServiceProtocol = {
+        UserInfoService()
+    }()
+    
     // Generic Service Provision Method
     func provideService<T>() -> T {
         if T.self == TopArtistsServiceProtocol.self {
@@ -40,7 +44,9 @@ class DependencyInjector {
             return topTracksService as! T
         }  else if T.self == ArtistServiceProtocol.self {
             return artistService as! T
-        }else {
+        } else if T.self == UserInfoServiceProtocol.self {
+            return userinfoService as! T
+        } else {
             fatalError("No service found for \(T.self)")
         }
     }
@@ -54,6 +60,8 @@ class DependencyInjector {
             return TopAlbumsViewModel(topAlbumsService: provideService()) as! T
         case is TopTracksViewModel.Type:
             return TopTracksViewModel(topTracksService: provideService(), artistService: provideService()) as! T
+        case is UserInfoViewModel.Type:
+            return UserInfoViewModel(userInfoService: provideService()) as! T
         default:
             fatalError("No ViewModel found for \(T.self)")
         }

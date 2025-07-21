@@ -23,7 +23,7 @@ class MockNetworkService: NetworkServiceProtocol {
     }
 }
 
-class MockTopItemsService: TopItemsServiceProtocol {
+class MockTopItemsService: UserServiceProtocol {
     func fetch<T>(endpoint: LastFmClient.UserEndpoint) async throws -> T where T : Decodable {
         if let error = error {
             throw error

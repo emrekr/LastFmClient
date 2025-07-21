@@ -11,6 +11,7 @@ enum UserEndpoint {
     case topArtists(username: String, page: Int)
     case topTracks(username: String, page: Int)
     case topAlbums(username: String, page: Int)
+    case userInfo(username: String)
     
     var queryItems: [URLQueryItem] {
         switch self {
@@ -20,6 +21,8 @@ enum UserEndpoint {
             return [.init(name: "method", value: "user.gettoptracks"), .init(name: "user", value: username), .init(name: "page", value: "\(page)")]
         case .topAlbums(let username, let page):
             return [.init(name: "method", value: "user.gettopalbums"), .init(name: "user", value: username), .init(name: "page", value: "\(page)")]
+        case .userInfo(let username):
+            return [.init(name: "method", value: "user.getinfo"), .init(name: "user", value: username)]
         }
     }
 }

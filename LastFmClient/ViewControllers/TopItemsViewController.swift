@@ -7,6 +7,12 @@
 
 import UIKit
 
+enum TopItems: String, CaseIterable {
+    case topArtists = "Top Artists"
+    case topAlbums = "Top Albums"
+    case topTracks = "Top Tracks"
+}
+
 protocol TopItemsViewControllerDelegate: AnyObject {
     func didSelectSegment(index: Int, in viewController: TopItemsViewController)
 }
@@ -14,13 +20,24 @@ protocol TopItemsViewControllerDelegate: AnyObject {
 class TopItemsViewController: UIViewController {
     weak var delegate: TopItemsViewControllerDelegate?
     
-    private let segmentedControl: UISegmentedControl = {
-        let control = UISegmentedControl(items: ["Top Artists", "Top Albums", "Top Tracks"])
-        control.selectedSegmentIndex = 0
-        control.backgroundColor = .white
-        control.translatesAutoresizingMaskIntoConstraints = false
-        return control
+    private lazy var segmentedControl: TopItemsSegmentedControl = {
+        let segmentedControl = TopItemsSegmentedControl(titles: TopItems.allCases.map({$0.rawValue}))
+        segmentedControl.translatesAutoresizingMaskIntoConstraints = false
+        return segmentedControl
     }()
+    
+    private lazy var userInfoView = UserInfoView(viewModel: userInfoViewModel)
+    
+    private let userInfoViewModel: UserInfoViewModel
+
+    init(userInfoViewModel: UserInfoViewModel) {
+        self.userInfoViewModel = userInfoViewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,19 +49,21 @@ class TopItemsViewController: UIViewController {
     private func setupUI() {
         self.view.backgroundColor = .white
         
+        view.addSubview(userInfoView)
         view.addSubview(segmentedControl)
         
+        view.addConstraints("H:|-16-[v0]-16-|", views: userInfoView)
         view.addConstraints("H:|-16-[v0]-16-|", views: segmentedControl)
-        view.addConstraints("V:|-[v0]", views: segmentedControl)
+        view.addConstraints("V:|-[v0]-8-[v1(48)]", views: userInfoView, segmentedControl)
     }
     
     private func addSegmentedControlTarget() {
-        segmentedControl.addTarget(self, action: #selector(segmentChanged), for: .valueChanged)
+        segmentedControl.didSelectIndex = { [weak self] index in
+            guard let weakSelf = self else { return }
+            weakSelf.delegate?.didSelectSegment(index: index, in: weakSelf)
+        }
     }
-    
-    @objc private func segmentChanged(_ sender: UISegmentedControl) {
-        delegate?.didSelectSegment(index: sender.selectedSegmentIndex, in: self)
-    }
+
 }
 
 extension TopItemsViewController {
