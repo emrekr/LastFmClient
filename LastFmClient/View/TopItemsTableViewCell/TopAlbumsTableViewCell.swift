@@ -62,6 +62,7 @@ class TopAlbumsTableViewCell: UITableViewCell {
     }()
     
     var imageLoader: ImageLoaderProtocol?
+    private var currentImageURL: URL?
     
     // MARK: - Initialization
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -89,19 +90,32 @@ class TopAlbumsTableViewCell: UITableViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        albumImageView.image = nil // Reset the image for reuse
+        if let url = currentImageURL {
+            Task {
+                await imageLoader?.cancelLoad(for: url)
+            }
+        }
+        currentImageURL = nil
+        albumImageView.image = nil
     }
     
     // MARK: - Configure Cell
+
     func configure(with viewModel: TopAlbumViewModel) {
         rankLabel.text = viewModel.formattedRank
         titleLabel.text = viewModel.name
         playcountLabel.text = viewModel.formattedPlaycount
         artistLabel.text = viewModel.artistName
-        
-        if let imageUrl = viewModel.imageURL {
-            imageLoader?.loadImage(from: imageUrl) { [weak self] image in
-                self?.albumImageView.image = image
+
+        currentImageURL = viewModel.imageURL
+        albumImageView.image = nil
+
+        if let imageUrl = currentImageURL {
+            Task {
+                if let image = await imageLoader?.loadImage(from: imageUrl),
+                   self.currentImageURL == imageUrl {
+                    self.albumImageView.image = image
+                }
             }
         }
     }

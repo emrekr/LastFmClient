@@ -62,6 +62,7 @@ class TopTracksTableViewCell: UITableViewCell {
     }()
     
     var imageLoader: ImageLoaderProtocol?
+    private var currentImageURL: URL?
     
     // MARK: - Initialization
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -92,17 +93,12 @@ class TopTracksTableViewCell: UITableViewCell {
         titleLabel.text = viewModel.name
         playcountLabel.text = viewModel.formattedPlaycount
         artistLabel.text = viewModel.artistName
-        
+
         if let artistInfo = viewModel.artistInfo {
             if let imageUrl = artistInfo.image.first(where: {$0.size == "medium"})?.url {
+                currentImageURL = URL(string: imageUrl)
                 loadArtistImage(imageUrl: imageUrl)
             }
-        } else if let imageURL = viewModel.imageURL {
-            imageLoader?.loadImage(from: imageURL, completion: { [weak self] image in
-                DispatchQueue.main.async {
-                    self?.artistImageView.image = image
-                }
-            })
         }
 
         viewModel.onImageUpdate = { [weak self] in
@@ -113,10 +109,21 @@ class TopTracksTableViewCell: UITableViewCell {
     }
     
     private func loadArtistImage(imageUrl: String) {
-        self.imageLoader?.loadImage(from: URL(string: imageUrl)!) { [weak self] image in
-            DispatchQueue.main.async {
-                self?.artistImageView.image = image
+        Task {
+            if let image = await imageLoader?.loadImage(from: URL(string: imageUrl)!) {
+                self.artistImageView.image = image
             }
         }
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        if let url = currentImageURL {
+            Task {
+                await imageLoader?.cancelLoad(for: url)
+            }
+        }
+        artistImageView.image = nil
+        currentImageURL = nil
     }
 }

@@ -45,6 +45,7 @@ class TopArtistTableViewCell: UITableViewCell {
     }()
     
     var imageLoader: ImageLoaderProtocol?
+    private var currentImageURL: URL?
     
     // MARK: - Initialization
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -69,7 +70,13 @@ class TopArtistTableViewCell: UITableViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
+        if let url = currentImageURL {
+            Task {
+                await imageLoader?.cancelLoad(for: url)
+            }
+        }
         artistImageView.image = nil
+        currentImageURL = nil
     }
     
     // MARK: - Configure Cell
@@ -77,19 +84,16 @@ class TopArtistTableViewCell: UITableViewCell {
         rankLabel.text = viewModel.formattedRank
         nameLabel.text = viewModel.name
         playcountLabel.text = viewModel.formattedPlaycount
-
+        
+        currentImageURL = viewModel.imageURL
+        
         if let artistInfo = viewModel.artistInfo {
             if let imageUrl = artistInfo.image.first(where: {$0.size == "medium"})?.url {
+                currentImageURL = URL(string: imageUrl)
                 loadArtistImage(imageUrl: imageUrl)
             }
-        } else if let imageURL = viewModel.imageURL {
-            imageLoader?.loadImage(from: imageURL, completion: { [weak self] image in
-                DispatchQueue.main.async {
-                    self?.artistImageView.image = image
-                }
-            })
         }
-
+        
         viewModel.onImageUpdate = { [weak self] in
             if let imageUrl = viewModel.artistInfo?.image.first(where: {$0.size == "medium"})?.url {
                 self?.loadArtistImage(imageUrl: imageUrl)
@@ -98,9 +102,9 @@ class TopArtistTableViewCell: UITableViewCell {
     }
     
     private func loadArtistImage(imageUrl: String) {
-        self.imageLoader?.loadImage(from: URL(string: imageUrl)!) { [weak self] image in
-            DispatchQueue.main.async {
-                self?.artistImageView.image = image
+        Task {
+            if let image = await imageLoader?.loadImage(from: URL(string: imageUrl)!) {
+                self.artistImageView.image = image
             }
         }
     }
