@@ -26,7 +26,6 @@ final class TopItemsSegmentedControl: UIView {
         self.titles = titles
         super.init(frame: frame)
         setupButtons()
-        setupUnderline()
         setupUI()
         selectIndex(0, animated: false)
     }
@@ -40,10 +39,7 @@ final class TopItemsSegmentedControl: UIView {
         addSubview(stackView)
 
         self.addConstraints("H:|-0-[v0]-0-|", views: stackView)
-        self.addConstraints("V:|-0-[v0]-4-[v1(\(SegmentedControlStyles.Underline.height))]-0-|", views: stackView, underlineView)
-    }
-    
-    private func setupUnderline() {
+        
         underlineView.translatesAutoresizingMaskIntoConstraints = false
         addSubview(underlineView)
         
@@ -51,12 +47,14 @@ final class TopItemsSegmentedControl: UIView {
         underlineWidthConstraint = underlineView.widthAnchor.constraint(equalToConstant: 0)
 
         NSLayoutConstraint.activate([
+            underlineView.topAnchor.constraint(equalTo: stackView.bottomAnchor, constant: 4),
+            underlineView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            underlineView.heightAnchor.constraint(equalToConstant: SegmentedControlStyles.Underline.height),
             underlineLeadingConstraint!,
             underlineWidthConstraint!
         ])
-
     }
-    
+
     private func setupButtons() {
         for (index, title) in titles.enumerated() {
             let button = createButton(title: title, tag: index)
