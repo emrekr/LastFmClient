@@ -11,35 +11,25 @@ class TopArtistTableViewCell: UITableViewCell {
     
     // MARK: - UI Elements
     private let rankLabel: UILabel = {
-        let label = UILabel()
-        label.font = .systemFont(ofSize: 14)
-        label.textColor = .blue
+        let label = UILabel().style(TopItemsTableViewCellStyles.Label.rankLabel)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
     private let nameLabel: UILabel = {
-        let label = UILabel()
-        label.font = .boldSystemFont(ofSize: 16)
-        label.numberOfLines = 1
+        let label = UILabel().style(TopItemsTableViewCellStyles.Label.nameLabel)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
     private let playcountLabel: UILabel = {
-        let label = UILabel()
-        label.font = .systemFont(ofSize: 14)
-        label.numberOfLines = 1
-        label.textColor = .gray
+        let label = UILabel().style(TopItemsTableViewCellStyles.Label.playcountLabel)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
     private let artistImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFill
-        imageView.layer.cornerRadius = 8
-        imageView.clipsToBounds = true
+        let imageView = UIImageView().style(TopItemsTableViewCellStyles.ImageView.artistImageView)
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
