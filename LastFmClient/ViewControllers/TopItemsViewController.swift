@@ -47,7 +47,7 @@ class TopItemsViewController: UIViewController {
     }
     
     private func setupUI() {
-        self.view.backgroundColor = .white
+        view.backgroundColor = .tableViewBackground
         
         view.addSubview(userInfoView)
         view.addSubview(segmentedControl)

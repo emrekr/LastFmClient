@@ -30,6 +30,7 @@ final class UserInfoView: UIView {
     }
 
     private func setupUI() {
+        backgroundColor = .tableViewBackground
         let stack = UIStackView(arrangedSubviews: [scrobblesLabel, artistLabel, albumLabel, trackLabel])
         stack.axis = .horizontal
         stack.distribution = .fillEqually

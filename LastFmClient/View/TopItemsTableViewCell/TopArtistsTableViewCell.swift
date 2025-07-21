@@ -7,15 +7,9 @@
 
 import UIKit
 
-class TopArtistTableViewCell: UITableViewCell {
+class TopArtistTableViewCell: TopItemsTableViewCell {
     
     // MARK: - UI Elements
-    private let rankLabel: UILabel = {
-        let label = UILabel().style(TopItemsTableViewCellStyles.Label.rankLabel)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
     private let nameLabel: UILabel = {
         let label = UILabel().style(TopItemsTableViewCellStyles.Label.nameLabel)
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -48,15 +42,20 @@ class TopArtistTableViewCell: UITableViewCell {
     }
     
     private func setupUI() {
-        contentView.addSubview(rankLabel)
-        contentView.addSubview(nameLabel)
-        contentView.addSubview(playcountLabel)
-        contentView.addSubview(artistImageView)
+        containerView.addSubview(artistImageView)
+        containerView.addSubview(nameLabel)
+        containerView.addSubview(playcountLabel)
+
+        contentView.addConstraints("H:|-10-[v0(64)]-10-[v1]-(>=10)-[v2]-10-|", views: artistImageView, nameLabel, playcountLabel)
+        contentView.addConstraints("V:|-10-[v0]-10-|", views: nameLabel)
+        contentView.addConstraints("V:|-10-[v0]-10-|", views: playcountLabel)
+        contentView.addConstraints("V:|-10-[v0(64)]-10-|", views: artistImageView)
         
-        contentView.addConstraints("H:|-10-[v0]-20-[v1(64)]-10-[v2]-(>=10)-[v3]-10-|", views: rankLabel, artistImageView, nameLabel, playcountLabel)
-        contentView.addConstraints("V:[v0(64)]", views: artistImageView)
-        contentView.addConstraintsToSubviews("V:|-10-[v0]-10-|")
+        NSLayoutConstraint.activate([
+            artistImageView.centerYAnchor.constraint(equalTo: containerView.centerYAnchor),
+        ])
     }
+
     
     override func prepareForReuse() {
         super.prepareForReuse()
@@ -71,7 +70,6 @@ class TopArtistTableViewCell: UITableViewCell {
     
     // MARK: - Configure Cell
     func configure(with viewModel: TopArtistViewModel) {
-        rankLabel.text = viewModel.formattedRank
         nameLabel.text = viewModel.name
         playcountLabel.text = viewModel.formattedPlaycount
         

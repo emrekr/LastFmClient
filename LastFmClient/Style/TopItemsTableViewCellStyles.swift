@@ -36,7 +36,7 @@ enum TopItemsTableViewCellStyles {
     enum ImageView {
         static let artistImageView = Style<UIImageView> {
             $0.contentMode = .scaleAspectFill
-            $0.layer.cornerRadius = 8
+            $0.layer.cornerRadius = 32
             $0.clipsToBounds = true
         }
     }

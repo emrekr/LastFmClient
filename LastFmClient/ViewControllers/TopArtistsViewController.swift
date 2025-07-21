@@ -46,7 +46,11 @@ class TopArtistsViewController: UIViewController {
         
         tableView.contentInsetAdjustmentBehavior = .never
         
-        tableView.rowHeight = 84
+        tableView.backgroundColor = .tableViewBackground
+
+        tableView.separatorStyle = .none
+        
+        //tableView.rowHeight = 84
 
         view.addSubview(tableView)
         tableView.fill(.all)
