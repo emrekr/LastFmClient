@@ -16,6 +16,8 @@ protocol TopArtistsViewModelProtocol {
     var onLoadingStateChange: ((Bool) -> Void)? { get set }
     
     var numberOfRowsInSection: Int { get }
+    
+    var greatestPlayCount: Int { get }
 }
 
 class TopArtistsViewModel: TopArtistsViewModelProtocol {
@@ -42,6 +44,10 @@ class TopArtistsViewModel: TopArtistsViewModelProtocol {
     
     var numberOfRowsInSection: Int {
         return artistViewModels.count
+    }
+    
+    var greatestPlayCount: Int {
+        return artistViewModels.first?.playcount ?? 0
     }
     
     func fetchTopArtists(userId: String) async {

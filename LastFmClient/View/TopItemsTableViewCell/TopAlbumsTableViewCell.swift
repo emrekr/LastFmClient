@@ -7,14 +7,9 @@
 
 import UIKit
 
-class TopAlbumsTableViewCell: UITableViewCell {
+class TopAlbumsTableViewCell: TopItemsTableViewCell {
     
     // MARK: - UI Elements
-    private let rankLabel: UILabel = {
-        let label = UILabel().style(TopItemsTableViewCellStyles.Label.rankLabel)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
     
     private let titleLabel: UILabel = {
         let label = UILabel().style(TopItemsTableViewCellStyles.Label.nameLabel)
@@ -48,6 +43,12 @@ class TopAlbumsTableViewCell: UITableViewCell {
         return imageView
     }()
     
+    private let progressView: ProgressBarView = {
+        let progressView = ProgressBarView()
+        progressView.translatesAutoresizingMaskIntoConstraints = false
+        return progressView
+    }()
+    
     var imageLoader: ImageLoaderProtocol?
     private var currentImageURL: URL?
     
@@ -63,16 +64,18 @@ class TopAlbumsTableViewCell: UITableViewCell {
     }
     
     private func setupUI() {
-        contentView.addSubview(rankLabel)
-        contentView.addSubview(playcountLabel)
-        contentView.addSubview(stackView)
-        contentView.addSubview(albumImageView)
+        containerView.addSubview(playcountLabel)
+        containerView.addSubview(stackView)
+        containerView.addSubview(albumImageView)
+        containerView.addSubview(progressView)
+        
         stackView.addArrangedSubview(titleLabel)
         stackView.addArrangedSubview(artistLabel)
         
-        contentView.addConstraints("H:|-10-[v0]-20-[v1(64)]-10-[v2]-(>=10)-[v3]-20-|", views: rankLabel, albumImageView, stackView, playcountLabel)
-        contentView.addConstraints("V:[v0(64)]", views: albumImageView)
-        contentView.addConstraintsToSubviews("V:|-10-[v0]-10-|")
+        containerView.addConstraints("H:|-10-[v0(64)]-10-[v1]-(>=10)-[v2]-20-|", views: albumImageView, stackView, playcountLabel)
+        containerView.addConstraints("H:|-10-[v0(64)]-10-[v1]-10-|", views: albumImageView, progressView)
+        containerView.addConstraints("V:|-10-[v0]-10-[v1(6)]-10-|", views: stackView, progressView)
+        containerView.addConstraints("V:|-10-[v0]-10-|", views: playcountLabel)
     }
     
     override func prepareForReuse() {
@@ -88,14 +91,15 @@ class TopAlbumsTableViewCell: UITableViewCell {
     
     // MARK: - Configure Cell
 
-    func configure(with viewModel: TopAlbumViewModel) {
-        rankLabel.text = viewModel.formattedRank
+    func configure(with viewModel: TopAlbumViewModel, ratio: CGFloat) {
         titleLabel.text = viewModel.name
         playcountLabel.text = viewModel.formattedPlaycount
         artistLabel.text = viewModel.artistName
 
         currentImageURL = viewModel.imageURL
         albumImageView.image = nil
+        
+        progressView.setProgress(ratio: ratio)
 
         if let imageUrl = currentImageURL {
             Task {

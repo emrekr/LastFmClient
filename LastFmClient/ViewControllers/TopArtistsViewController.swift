@@ -49,8 +49,6 @@ class TopArtistsViewController: UIViewController {
         tableView.backgroundColor = .tableViewBackground
 
         tableView.separatorStyle = .none
-        
-        //tableView.rowHeight = 84
 
         view.addSubview(tableView)
         tableView.fill(.all)
@@ -92,7 +90,8 @@ extension TopArtistsViewController: UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TopArtistsCell", for: indexPath) as! TopArtistTableViewCell
         let artistViewModel = viewModel.artistAtIndexPath(indexPath: indexPath)
         cell.imageLoader = imageLoader
-        cell.configure(with: artistViewModel)
+        let ratio: CGFloat = CGFloat(artistViewModel.playcount)/CGFloat(viewModel.greatestPlayCount)
+        cell.configure(with: artistViewModel, ratio: ratio)
         return cell
     }
     

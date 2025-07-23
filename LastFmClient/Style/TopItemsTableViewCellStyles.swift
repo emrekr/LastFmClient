@@ -17,7 +17,7 @@ enum TopItemsTableViewCellStyles {
         
         static let nameLabel = Style<UILabel> {
             $0.font = .boldSystemFont(ofSize: 16)
-            $0.numberOfLines = 1
+            $0.numberOfLines = 2
         }
         
         static let playcountLabel = Style<UILabel> {

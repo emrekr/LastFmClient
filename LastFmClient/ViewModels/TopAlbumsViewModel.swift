@@ -16,6 +16,8 @@ protocol TopAlbumsViewModelProtocol {
     var onLoadingStateChange: ((Bool) -> Void)? { get set }
     
     var numberOfRowsInSection: Int { get }
+    
+    var greatestPlayCount: Int { get }
 }
 
 class TopAlbumsViewModel: TopAlbumsViewModelProtocol {
@@ -42,6 +44,10 @@ class TopAlbumsViewModel: TopAlbumsViewModelProtocol {
     
     var numberOfRowsInSection: Int {
         return topAlbumViewModels.count
+    }
+    
+    var greatestPlayCount: Int {
+        return topAlbumViewModels.first?.playcount ?? 0
     }
     
     func fetchTopAlbums(userId: String) async {

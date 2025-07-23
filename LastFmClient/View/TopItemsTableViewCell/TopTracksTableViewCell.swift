@@ -7,14 +7,9 @@
 
 import UIKit
 
-class TopTracksTableViewCell: UITableViewCell {
+class TopTracksTableViewCell: TopItemsTableViewCell {
     
     // MARK: - UI Elements
-    private let rankLabel: UILabel = {
-        let label = UILabel().style(TopItemsTableViewCellStyles.Label.rankLabel)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
     
     private let titleLabel: UILabel = {
         let label = UILabel().style(TopItemsTableViewCellStyles.Label.nameLabel)
@@ -48,6 +43,12 @@ class TopTracksTableViewCell: UITableViewCell {
         return imageView
     }()
     
+    private let progressView: ProgressBarView = {
+        let progressView = ProgressBarView()
+        progressView.translatesAutoresizingMaskIntoConstraints = false
+        return progressView
+    }()
+    
     var imageLoader: ImageLoaderProtocol?
     private var currentImageURL: URL?
     
@@ -62,25 +63,28 @@ class TopTracksTableViewCell: UITableViewCell {
     }
     
     private func setupUI() {
-        contentView.addSubview(rankLabel)
-        contentView.addSubview(playcountLabel)
-        contentView.addSubview(stackView)
-        contentView.addSubview(artistImageView)
+        containerView.addSubview(playcountLabel)
+        containerView.addSubview(stackView)
+        containerView.addSubview(artistImageView)
+        containerView.addSubview(progressView)
+        
         stackView.addArrangedSubview(titleLabel)
         stackView.addArrangedSubview(artistLabel)
         
-        contentView.addConstraints("H:|-10-[v0]-20-[v1(64)]-10-[v2]-(>=10)-[v3]-20-|", views: rankLabel, artistImageView, stackView, playcountLabel)
-        contentView.addConstraints("V:[v0(64)]", views: artistImageView)
-        contentView.addConstraintsToSubviews("V:|-10-[v0]-10-|")
+        containerView.addConstraints("H:|-10-[v0(64)]-10-[v1]-(>=10)-[v2]-20-|", views: artistImageView, stackView, playcountLabel)
+        containerView.addConstraints("H:|-10-[v0(64)]-10-[v1]-10-|", views: artistImageView, progressView)
+        containerView.addConstraints("V:|-10-[v0]-10-[v1(6)]-10-|", views: stackView, progressView)
+        containerView.addConstraints("V:|-10-[v0]-10-|", views: playcountLabel)
     }
     
     // MARK: - Configure Cell
-    func configure(with viewModel: TopTrackViewModel) {
-        rankLabel.text = viewModel.formattedRank
+    func configure(with viewModel: TopTrackViewModel, ratio: CGFloat) {
         titleLabel.text = viewModel.name
         playcountLabel.text = viewModel.formattedPlaycount
         artistLabel.text = viewModel.artistName
 
+        progressView.setProgress(ratio: ratio)
+        
         if let artistInfo = viewModel.artistInfo {
             if let imageUrl = artistInfo.image.first(where: {$0.size == "medium"})?.url {
                 currentImageURL = URL(string: imageUrl)

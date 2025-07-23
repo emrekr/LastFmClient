@@ -28,6 +28,12 @@ class TopArtistTableViewCell: TopItemsTableViewCell {
         return imageView
     }()
     
+    private let progressView: ProgressBarView = {
+        let progressView = ProgressBarView()
+        progressView.translatesAutoresizingMaskIntoConstraints = false
+        return progressView
+    }()
+    
     var imageLoader: ImageLoaderProtocol?
     private var currentImageURL: URL?
     
@@ -45,12 +51,14 @@ class TopArtistTableViewCell: TopItemsTableViewCell {
         containerView.addSubview(artistImageView)
         containerView.addSubview(nameLabel)
         containerView.addSubview(playcountLabel)
+        containerView.addSubview(progressView)
 
-        contentView.addConstraints("H:|-10-[v0(64)]-10-[v1]-(>=10)-[v2]-10-|", views: artistImageView, nameLabel, playcountLabel)
-        contentView.addConstraints("V:|-10-[v0]-10-|", views: nameLabel)
-        contentView.addConstraints("V:|-10-[v0]-10-|", views: playcountLabel)
-        contentView.addConstraints("V:|-10-[v0(64)]-10-|", views: artistImageView)
-        
+        containerView.addConstraints("H:|-10-[v0(64)]-10-[v1]-(>=10)-[v2]-10-|", views: artistImageView, nameLabel, playcountLabel)
+        containerView.addConstraints("H:|-10-[v0(64)]-10-[v1]-10-|", views: artistImageView, progressView)
+        containerView.addConstraints("V:|-10-[v0]-10-[v1(6)]-10-|", views: nameLabel, progressView)
+        containerView.addConstraints("V:|-10-[v0]-10-|", views: playcountLabel)
+        containerView.addConstraints("V:|-10-[v0(64)]-10-|", views: artistImageView)
+                
         NSLayoutConstraint.activate([
             artistImageView.centerYAnchor.constraint(equalTo: containerView.centerYAnchor),
         ])
@@ -69,11 +77,13 @@ class TopArtistTableViewCell: TopItemsTableViewCell {
     }
     
     // MARK: - Configure Cell
-    func configure(with viewModel: TopArtistViewModel) {
+    func configure(with viewModel: TopArtistViewModel, ratio: CGFloat) {
         nameLabel.text = viewModel.name
         playcountLabel.text = viewModel.formattedPlaycount
         
         currentImageURL = viewModel.imageURL
+        
+        progressView.setProgress(ratio: ratio)
         
         if let artistInfo = viewModel.artistInfo {
             if let imageUrl = artistInfo.image.first(where: {$0.size == "medium"})?.url {
