@@ -45,9 +45,7 @@ class TopTracksViewController: UIViewController {
         tableView.tableFooterView = loadingIndicator
 
         tableView.contentInsetAdjustmentBehavior = .never
-        
-        tableView.rowHeight = 84
-        
+
         view.addSubview(tableView)
         tableView.fill(.all)
     }
@@ -88,7 +86,8 @@ extension TopTracksViewController: UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TopTracksCell", for: indexPath) as! TopTracksTableViewCell
         let trackViewModel = viewModel.trackAtIndexPath(indexPath: indexPath)
         cell.imageLoader = imageLoader
-        cell.configure(with: trackViewModel)
+        let ratio = CGFloat(trackViewModel.playcount)/CGFloat(viewModel.greatestplaycount)
+        cell.configure(with: trackViewModel, ratio: ratio)
         return cell
     }
     

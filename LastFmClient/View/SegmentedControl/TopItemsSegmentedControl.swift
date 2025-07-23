@@ -35,6 +35,7 @@ final class TopItemsSegmentedControl: UIView {
     }
 
     private func setupUI() {
+        backgroundColor = .tableViewBackground
         stackView.translatesAutoresizingMaskIntoConstraints = false
         addSubview(stackView)
 

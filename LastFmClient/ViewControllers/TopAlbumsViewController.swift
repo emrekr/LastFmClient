@@ -45,8 +45,6 @@ class TopAlbumsViewController: UIViewController {
         tableView.tableFooterView = loadingIndicator
 
         tableView.contentInsetAdjustmentBehavior = .never
-        
-        tableView.rowHeight = 84
 
         view.addSubview(tableView)
         tableView.fill(.all)
@@ -90,7 +88,8 @@ extension TopAlbumsViewController: UITableViewDelegate, UITableViewDataSource {
         }
         let albumViewModel = viewModel.albumAtIndexPath(indexPath: indexPath)
         cell.imageLoader = imageLoader
-        cell.configure(with: albumViewModel)
+        let ratio = CGFloat(albumViewModel.playcount)/CGFloat(viewModel.greatestPlayCount)
+        cell.configure(with: albumViewModel, ratio: ratio)
         return cell
     }
     

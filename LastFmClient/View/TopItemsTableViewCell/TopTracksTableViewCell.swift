@@ -7,39 +7,24 @@
 
 import UIKit
 
-class TopTracksTableViewCell: UITableViewCell {
+class TopTracksTableViewCell: TopItemsTableViewCell {
     
     // MARK: - UI Elements
-    private let rankLabel: UILabel = {
-        let label = UILabel()
-        label.font = .systemFont(ofSize: 14)
-        label.textColor = .blue
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
     
     private let titleLabel: UILabel = {
-        let label = UILabel()
-        label.font = .boldSystemFont(ofSize: 16)
-        label.numberOfLines = 1
+        let label = UILabel().style(TopItemsTableViewCellStyles.Label.nameLabel)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
     private let artistLabel: UILabel = {
-        let label = UILabel()
-        label.font = .systemFont(ofSize: 14)
-        label.numberOfLines = 1
-        label.textColor = .gray
+        let label = UILabel().style(TopItemsTableViewCellStyles.Label.artistLabel)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
     private let playcountLabel: UILabel = {
-        let label = UILabel()
-        label.font = .systemFont(ofSize: 14)
-        label.numberOfLines = 1
-        label.textColor = .gray
+        let label = UILabel().style(TopItemsTableViewCellStyles.Label.playcountLabel)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -53,15 +38,19 @@ class TopTracksTableViewCell: UITableViewCell {
     }()
     
     private let artistImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFill
-        imageView.layer.cornerRadius = 8
-        imageView.clipsToBounds = true
+        let imageView = UIImageView().style(TopItemsTableViewCellStyles.ImageView.artistImageView)
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
     
+    private let progressView: ProgressBarView = {
+        let progressView = ProgressBarView()
+        progressView.translatesAutoresizingMaskIntoConstraints = false
+        return progressView
+    }()
+    
     var imageLoader: ImageLoaderProtocol?
+    private var currentImageURL: URL?
     
     // MARK: - Initialization
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -74,35 +63,33 @@ class TopTracksTableViewCell: UITableViewCell {
     }
     
     private func setupUI() {
-        contentView.addSubview(rankLabel)
-        contentView.addSubview(playcountLabel)
-        contentView.addSubview(stackView)
-        contentView.addSubview(artistImageView)
+        containerView.addSubview(playcountLabel)
+        containerView.addSubview(stackView)
+        containerView.addSubview(artistImageView)
+        containerView.addSubview(progressView)
+        
         stackView.addArrangedSubview(titleLabel)
         stackView.addArrangedSubview(artistLabel)
         
-        contentView.addConstraints("H:|-10-[v0]-20-[v1(64)]-10-[v2]-(>=10)-[v3]-20-|", views: rankLabel, artistImageView, stackView, playcountLabel)
-        contentView.addConstraints("V:[v0(64)]", views: artistImageView)
-        contentView.addConstraintsToSubviews("V:|-10-[v0]-10-|")
+        containerView.addConstraints("H:|-10-[v0(64)]-10-[v1]-(>=10)-[v2]-20-|", views: artistImageView, stackView, playcountLabel)
+        containerView.addConstraints("H:|-10-[v0(64)]-10-[v1]-10-|", views: artistImageView, progressView)
+        containerView.addConstraints("V:|-10-[v0]-10-[v1(6)]-10-|", views: stackView, progressView)
+        containerView.addConstraints("V:|-10-[v0]-10-|", views: playcountLabel)
     }
     
     // MARK: - Configure Cell
-    func configure(with viewModel: TopTrackViewModel) {
-        rankLabel.text = viewModel.formattedRank
+    func configure(with viewModel: TopTrackViewModel, ratio: CGFloat) {
         titleLabel.text = viewModel.name
         playcountLabel.text = viewModel.formattedPlaycount
         artistLabel.text = viewModel.artistName
+
+        progressView.setProgress(ratio: ratio)
         
         if let artistInfo = viewModel.artistInfo {
             if let imageUrl = artistInfo.image.first(where: {$0.size == "medium"})?.url {
+                currentImageURL = URL(string: imageUrl)
                 loadArtistImage(imageUrl: imageUrl)
             }
-        } else if let imageURL = viewModel.imageURL {
-            imageLoader?.loadImage(from: imageURL, completion: { [weak self] image in
-                DispatchQueue.main.async {
-                    self?.artistImageView.image = image
-                }
-            })
         }
 
         viewModel.onImageUpdate = { [weak self] in
@@ -113,10 +100,21 @@ class TopTracksTableViewCell: UITableViewCell {
     }
     
     private func loadArtistImage(imageUrl: String) {
-        self.imageLoader?.loadImage(from: URL(string: imageUrl)!) { [weak self] image in
-            DispatchQueue.main.async {
-                self?.artistImageView.image = image
+        Task {
+            if let image = await imageLoader?.loadImage(from: URL(string: imageUrl)!) {
+                self.artistImageView.image = image
             }
         }
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        if let url = currentImageURL {
+            Task {
+                await imageLoader?.cancelLoad(for: url)
+            }
+        }
+        artistImageView.image = nil
+        currentImageURL = nil
     }
 }

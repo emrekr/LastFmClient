@@ -33,7 +33,7 @@ class TopArtistViewModel {
         return artist.name
     }
 
-    private var playcount: Int {
+    var playcount: Int {
         return Int(artist.playcount) ?? 0
     }
     

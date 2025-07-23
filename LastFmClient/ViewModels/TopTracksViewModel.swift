@@ -16,6 +16,8 @@ protocol TopTracksViewModelProtocol {
     var onLoadingStateChange: ((Bool) -> Void)? { get set }
     
     var numberOfRowsInSection: Int { get }
+    
+    var greatestplaycount: Int { get }
 }
 
 class TopTracksViewModel: TopTracksViewModelProtocol {
@@ -47,6 +49,10 @@ class TopTracksViewModel: TopTracksViewModelProtocol {
     
     var numberOfRowsInSection: Int {
         return topTrackViewModels.count
+    }
+    
+    var greatestplaycount: Int {
+        return topTrackViewModels.first?.playcount ?? 0
     }
     
     func fetchTopTracks(userId: String) async {
